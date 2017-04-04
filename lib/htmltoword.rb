@@ -22,6 +22,15 @@ require_relative 'htmltoword/helpers/templates_helper'
 require_relative 'htmltoword/helpers/xslt_helper'
 require_relative 'htmltoword/document'
 
+if ENV['HTMLTOWORD_DETERMINISTIC']
+  # Make output deterministic with static timestamps
+  class Zip::DOSTime
+    def self.now
+      new '2017'
+    end
+  end
+end
+
 if defined?(Rails)
   require_relative 'htmltoword/renderer'
   require_relative 'htmltoword/railtie'
